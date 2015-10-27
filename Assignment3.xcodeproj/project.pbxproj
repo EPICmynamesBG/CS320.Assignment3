@@ -8,12 +8,17 @@
 
 /* Begin PBXBuildFile section */
 		BCA147B21BDFB7F800481DF6 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCA147B11BDFB7F800481DF6 /* AppDelegate.swift */; };
-		BCA147B41BDFB7F800481DF6 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCA147B31BDFB7F800481DF6 /* ViewController.swift */; };
+		BCA147B41BDFB7F800481DF6 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCA147B31BDFB7F800481DF6 /* MainViewController.swift */; };
 		BCA147B71BDFB7F800481DF6 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BCA147B51BDFB7F800481DF6 /* Main.storyboard */; };
 		BCA147B91BDFB7F800481DF6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BCA147B81BDFB7F800481DF6 /* Assets.xcassets */; };
 		BCA147BC1BDFB7F800481DF6 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BCA147BA1BDFB7F800481DF6 /* LaunchScreen.storyboard */; };
 		BCA147C71BDFB7F800481DF6 /* Assignment3Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCA147C61BDFB7F800481DF6 /* Assignment3Tests.swift */; };
 		BCA147D21BDFB7F800481DF6 /* Assignment3UITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCA147D11BDFB7F800481DF6 /* Assignment3UITests.swift */; };
+		BCD5065A1BDFC36600F798C1 /* CustomTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCD506591BDFC36600F798C1 /* CustomTableCell.swift */; };
+		BCD5065C1BDFCC6900F798C1 /* iTunesRequestor.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCD5065B1BDFCC6900F798C1 /* iTunesRequestor.swift */; };
+		BCD506611BDFE11C00F798C1 /* AVPopupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCD506601BDFE11C00F798C1 /* AVPopupViewController.swift */; };
+		BCD506631BDFE91000F798C1 /* MoviePopupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCD506621BDFE91000F798C1 /* MoviePopupViewController.swift */; };
+		BCD506651BDFE98400F798C1 /* SoftwarePopupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCD506641BDFE98400F798C1 /* SoftwarePopupViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -36,7 +41,7 @@
 /* Begin PBXFileReference section */
 		BCA147AE1BDFB7F800481DF6 /* Assignment3.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Assignment3.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BCA147B11BDFB7F800481DF6 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		BCA147B31BDFB7F800481DF6 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		BCA147B31BDFB7F800481DF6 /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 		BCA147B61BDFB7F800481DF6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		BCA147B81BDFB7F800481DF6 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		BCA147BB1BDFB7F800481DF6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -47,6 +52,11 @@
 		BCA147CD1BDFB7F800481DF6 /* Assignment3UITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Assignment3UITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		BCA147D11BDFB7F800481DF6 /* Assignment3UITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Assignment3UITests.swift; sourceTree = "<group>"; };
 		BCA147D31BDFB7F800481DF6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		BCD506591BDFC36600F798C1 /* CustomTableCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomTableCell.swift; sourceTree = "<group>"; };
+		BCD5065B1BDFCC6900F798C1 /* iTunesRequestor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = iTunesRequestor.swift; sourceTree = "<group>"; };
+		BCD506601BDFE11C00F798C1 /* AVPopupViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AVPopupViewController.swift; sourceTree = "<group>"; };
+		BCD506621BDFE91000F798C1 /* MoviePopupViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MoviePopupViewController.swift; sourceTree = "<group>"; };
+		BCD506641BDFE98400F798C1 /* SoftwarePopupViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SoftwarePopupViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -97,12 +107,12 @@
 		BCA147B01BDFB7F800481DF6 /* Assignment3 */ = {
 			isa = PBXGroup;
 			children = (
-				BCA147B11BDFB7F800481DF6 /* AppDelegate.swift */,
-				BCA147B31BDFB7F800481DF6 /* ViewController.swift */,
+				BCD5065D1BDFCCB400F798C1 /* View Controllers */,
+				BCD5065E1BDFCCCA00F798C1 /* Model */,
 				BCA147B51BDFB7F800481DF6 /* Main.storyboard */,
 				BCA147B81BDFB7F800481DF6 /* Assets.xcassets */,
 				BCA147BA1BDFB7F800481DF6 /* LaunchScreen.storyboard */,
-				BCA147BD1BDFB7F800481DF6 /* Info.plist */,
+				BCD5065F1BDFCD0C00F798C1 /* Supporting Files */,
 			);
 			path = Assignment3;
 			sourceTree = "<group>";
@@ -123,6 +133,35 @@
 				BCA147D31BDFB7F800481DF6 /* Info.plist */,
 			);
 			path = Assignment3UITests;
+			sourceTree = "<group>";
+		};
+		BCD5065D1BDFCCB400F798C1 /* View Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				BCA147B31BDFB7F800481DF6 /* MainViewController.swift */,
+				BCD506591BDFC36600F798C1 /* CustomTableCell.swift */,
+				BCD506621BDFE91000F798C1 /* MoviePopupViewController.swift */,
+				BCD506601BDFE11C00F798C1 /* AVPopupViewController.swift */,
+				BCD506641BDFE98400F798C1 /* SoftwarePopupViewController.swift */,
+			);
+			name = "View Controllers";
+			sourceTree = "<group>";
+		};
+		BCD5065E1BDFCCCA00F798C1 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				BCD5065B1BDFCC6900F798C1 /* iTunesRequestor.swift */,
+			);
+			name = Model;
+			sourceTree = "<group>";
+		};
+		BCD5065F1BDFCD0C00F798C1 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				BCA147B11BDFB7F800481DF6 /* AppDelegate.swift */,
+				BCA147BD1BDFB7F800481DF6 /* Info.plist */,
+			);
+			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -256,8 +295,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				BCA147B41BDFB7F800481DF6 /* ViewController.swift in Sources */,
+				BCD506631BDFE91000F798C1 /* MoviePopupViewController.swift in Sources */,
+				BCD506611BDFE11C00F798C1 /* AVPopupViewController.swift in Sources */,
+				BCA147B41BDFB7F800481DF6 /* MainViewController.swift in Sources */,
+				BCD506651BDFE98400F798C1 /* SoftwarePopupViewController.swift in Sources */,
 				BCA147B21BDFB7F800481DF6 /* AppDelegate.swift in Sources */,
+				BCD5065C1BDFCC6900F798C1 /* iTunesRequestor.swift in Sources */,
+				BCD5065A1BDFC36600F798C1 /* CustomTableCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -484,6 +528,7 @@
 				BCA147D81BDFB7F800481DF6 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		BCA147D91BDFB7F800481DF6 /* Build configuration list for PBXNativeTarget "Assignment3Tests" */ = {
 			isa = XCConfigurationList;
@@ -492,6 +537,7 @@
 				BCA147DB1BDFB7F800481DF6 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		BCA147DC1BDFB7F800481DF6 /* Build configuration list for PBXNativeTarget "Assignment3UITests" */ = {
 			isa = XCConfigurationList;
@@ -500,6 +546,7 @@
 				BCA147DE1BDFB7F800481DF6 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
