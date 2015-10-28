@@ -18,7 +18,7 @@ class MoviePopupViewController: UIViewController {
         self.scrollView.contentSize.width = self.view.frame.size.width
         self.scrollView.frame.size.width = self.view.frame.size.width
     }
-    
+    //tester
     
 }
 
