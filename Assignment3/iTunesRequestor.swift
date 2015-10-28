@@ -10,7 +10,9 @@ import Foundation
 import UIKit
 
 @objc protocol iTunesRequestorDelegate {
-    optional func iTunesRequestCompleted()
+    optional func iTunesRequestCompleted(jsonData: NSArray)
+    optional func imageRequestCompleted(image: UIImage)
+    optional func cellImageRequestCompleted(index: Int, withImage image: UIImage)
 }
 
 class iTunesRequestor {
@@ -19,7 +21,6 @@ class iTunesRequestor {
     var makingRequest: Bool!
     var requestURLBase:String! = ""
     var limit: String! = ""
-    var jsonData: NSArray!
     
     init(){
         self.requestURLBase = "https://itunes.apple.com/search?term="
@@ -30,7 +31,7 @@ class iTunesRequestor {
         self.makingRequest = true
         let editedTerm = term.stringByReplacingOccurrencesOfString(" ", withString: "+")
         
-        let stringURL = self.requestURLBase + editedTerm
+        let stringURL = self.requestURLBase + editedTerm +  self.limit
         let url: NSURL = NSURL(string: stringURL)!
         self.urlRequest(url)
     }
@@ -58,13 +59,14 @@ class iTunesRequestor {
     
     private func urlRequest(url: NSURL){
         let session: NSURLSession = NSURLSession.sharedSession()
+        var json: NSArray!
         let dataTask: NSURLSessionDataTask = session.dataTaskWithURL(url) { (data: NSData?, response: NSURLResponse?, error: NSError?) -> Void in
             if (data != nil && error == nil){
-                self.jsonData = self.parseJSON(data)
+                json = self.parseJSON(data)
             }
             dispatch_async(dispatch_get_main_queue(), { () -> Void in
                 self.makingRequest = false
-                self.delegate?.iTunesRequestCompleted!()
+                self.delegate?.iTunesRequestCompleted!(json)
             })
             
         }
@@ -83,11 +85,44 @@ class iTunesRequestor {
         return resultArray
     }
     
+    //DEPRACATED
     func getIconImage(url: String) -> UIImage{
         let data:NSData = NSData(contentsOfURL: NSURL(string: url)!)!
         let icon = UIImage(data: data)!
         return icon
     }
     
+    func getImageInBackground(url: String) {
+        var fetchedImage: UIImage!
+        let session: NSURLSession = NSURLSession.sharedSession()
+        let dataTask: NSURLSessionDataTask = session.dataTaskWithURL(NSURL(string: url)!) { (data: NSData?, response: NSURLResponse?, error: NSError?) -> Void in
+            if (data != nil && error == nil){
+                fetchedImage = UIImage(data: data!)!
+            }
+            dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                self.makingRequest = false
+                self.delegate?.imageRequestCompleted!(fetchedImage)
+            })
+            
+        }
+        dataTask.resume()
+    }
+    
+    func getCellImageInBackground(url: String, atIndex index: Int) {
+        let thisURL = NSURL(string: url)!
+        var fetchedImage: UIImage!
+        let session: NSURLSession = NSURLSession.sharedSession()
+        let dataTask: NSURLSessionDataTask = session.dataTaskWithURL(thisURL) { (data: NSData?, response: NSURLResponse?, error: NSError?) -> Void in
+            if (data != nil && error == nil){
+                fetchedImage = UIImage(data: data!)!
+            }
+            dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                self.makingRequest = false
+                self.delegate?.cellImageRequestCompleted!(index, withImage: fetchedImage)
+            })
+            
+        }
+        dataTask.resume()
+    }
     
 }

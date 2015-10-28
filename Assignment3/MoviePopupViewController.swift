@@ -19,7 +19,12 @@ class MoviePopupViewController: UIViewController {
     @IBOutlet weak var longDescription: UILabel!
     
     override func viewDidLoad() {
+        super.viewDidLoad()
+        
         self.navigationController?.setNavigationBarHidden(true, animated: false)
+        
+        self.setDataLabels()
+        
         self.scrollView.contentSize.width = self.view.frame.size.width
         self.scrollView.frame.size.width = self.view.frame.size.width
     
@@ -32,8 +37,20 @@ class MoviePopupViewController: UIViewController {
         self.view.addGestureRecognizer(tap2)
     }
     
+    func setDataLabels(){
+        self.trackName.text = self.jsonData["trackName"] as? String
+        let trackPrice = self.jsonData["trackPrice"] as! Double
+        if (trackPrice == 0.0){
+            self.trackPrice.text = "Free"
+        } else {
+            self.trackPrice.text = "$\(trackPrice)"
+        }
+        self.genre.text = self.jsonData["primaryGenreName"] as? String
+        self.longDescription.text = self.jsonData["longDescription"] as? String
+    }
+    
     func tap(){
-        let label = UILabel(frame: CGRect(x: 0, y: self.view.bounds.height - 17, width: self.view.bounds.width, height: 17))
+        let label = UILabel(frame: CGRect(x: 0, y: 16, width: self.view.bounds.width, height: 17))
         label.text = "Double tap to go back"
         label.textColor = UIColor.lightGrayColor()
         label.textAlignment = NSTextAlignment.Center

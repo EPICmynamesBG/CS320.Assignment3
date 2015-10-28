@@ -26,6 +26,13 @@ class MainViewController: UIViewController, UITableViewDelegate, UISearchBarDele
         requestor = iTunesRequestor()
         self.requestor.delegate = self
         self.searchTypeController.addTarget(self, action: "changeSearchType", forControlEvents: UIControlEvents.ValueChanged)
+        
+        let tapOutsideSearch: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "tap")
+        self.view.addGestureRecognizer(tapOutsideSearch)
+    }
+    
+    func tap(){
+        self.searchBar.resignFirstResponder()
     }
     
     func changeSearchType(){
@@ -41,21 +48,32 @@ class MainViewController: UIViewController, UITableViewDelegate, UISearchBarDele
     func tableView(tableView: UITableView, accessoryButtonTappedForRowWithIndexPath indexPath: NSIndexPath) {
         let dict = self.responseData[indexPath.row] as! NSDictionary
         let type = dict["kind"] as! String
-        var popupVC: UIViewController!
         if (type == "song" || type == "artist"){
-            popupVC = self.storyboard?.instantiateViewControllerWithIdentifier("AVPopupViewController")
-        } else if (type == "software-package"){
-            popupVC = self.storyboard?.instantiateViewControllerWithIdentifier("SoftwarePopupViewController")
+            let popupVC: AVPopupViewController = self.storyboard?.instantiateViewControllerWithIdentifier("AVPopupViewController") as! AVPopupViewController
+            popupVC.jsonData = self.responseData[indexPath.row] as! NSDictionary
+            UIView.animateWithDuration(0.75) { () -> Void in
+                UIView.setAnimationCurve(UIViewAnimationCurve.EaseInOut)
+                self.navigationController?.pushViewController(popupVC, animated: false)
+                UIView.setAnimationTransition(UIViewAnimationTransition.FlipFromRight, forView: (self.navigationController?.view)!, cache: false)
+            }
+        } else if (type == "software"){
+            let popupVC = self.storyboard?.instantiateViewControllerWithIdentifier("SoftwarePopupViewController") as! SoftwarePopupViewController
+            popupVC.jsonData = self.responseData[indexPath.row] as! NSDictionary
+            UIView.animateWithDuration(0.75) { () -> Void in
+                UIView.setAnimationCurve(UIViewAnimationCurve.EaseInOut)
+                self.navigationController?.pushViewController(popupVC, animated: false)
+                UIView.setAnimationTransition(UIViewAnimationTransition.FlipFromRight, forView: (self.navigationController?.view)!, cache: false)
+            }
         } else if (type == "feature-movie"){
-            popupVC = self.storyboard?.instantiateViewControllerWithIdentifier("MoviePopupViewController")
+            let popupVC = self.storyboard?.instantiateViewControllerWithIdentifier("MoviePopupViewController") as! MoviePopupViewController
+            popupVC.jsonData = self.responseData[indexPath.row] as! NSDictionary
+            UIView.animateWithDuration(0.75) { () -> Void in
+                UIView.setAnimationCurve(UIViewAnimationCurve.EaseInOut)
+                self.navigationController?.pushViewController(popupVC, animated: false)
+                UIView.setAnimationTransition(UIViewAnimationTransition.FlipFromRight, forView: (self.navigationController?.view)!, cache: false)
+            }
         } else {
             return
-        }
-        
-        UIView.animateWithDuration(0.75) { () -> Void in
-            UIView.setAnimationCurve(UIViewAnimationCurve.EaseInOut)
-            self.navigationController?.pushViewController(popupVC, animated: false)
-            UIView.setAnimationTransition(UIViewAnimationTransition.FlipFromRight, forView: (self.navigationController?.view)!, cache: false)
         }
         
     }
@@ -68,24 +86,28 @@ class MainViewController: UIViewController, UITableViewDelegate, UISearchBarDele
         if (self.responseData == nil){
             return 0
         }
-        print(self.responseData.count)
         return self.responseData.count
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         var cell:CustomTableCell = self.tableView.dequeueReusableCellWithIdentifier("customTableCell") as! CustomTableCell
         let dict = self.responseData[indexPath.row] as! NSDictionary
-        cell = self.setCellData(cell, withData: dict)
+        cell = self.setCellData(cell,atIndex: indexPath.row, withData: dict)
         
         return cell
     }
     
-    private func setCellData(cell: CustomTableCell, withData dict: NSDictionary) -> CustomTableCell{
+    private func setCellData(cell: CustomTableCell, atIndex index:Int, withData dict: NSDictionary) -> CustomTableCell{
+        if (dict["kind"] == nil){
+            cell.title.text = "Useless data"
+            cell.subtitle.text = "Useless data"
+            cell.iconImage.hidden = true
+            return cell
+        }
         let type = dict["kind"] as! String
         if (type == "song" || type == "artist"){
             cell.title.text = dict["trackName"] as? String
             cell.subtitle.text = dict["collectionName"] as? String
-            cell.iconImage.image = self.requestor.getIconImage(dict["artworkUrl100"] as! String)
         } else if (type == "software"){
             cell.title.text = dict["artistName"] as? String
             let price = dict["price"] as! Double
@@ -94,17 +116,18 @@ class MainViewController: UIViewController, UITableViewDelegate, UISearchBarDele
             } else {
                 cell.subtitle.text = "$\(price)"
             }
-            
-            cell.iconImage.image = self.requestor.getIconImage(dict["artworkUrl100"] as! String)
         } else if (type == "feature-movie"){
             cell.title.text = dict["trackName"] as? String
             cell.subtitle.text = "Rated " + (dict["contentAdvisoryRating"] as? String)!
-            cell.iconImage.image = self.requestor.getIconImage(dict["artworkUrl100"] as! String)
+            
         } else {
             cell.title.text = "Useless data"
             cell.subtitle.text = "Useless data"
             cell.iconImage.hidden = true
         }
+        
+        //cell.iconImage.image = self.requestor.getIconImage(dict["artworkUrl100"] as! String)
+        self.requestor.getCellImageInBackground(dict["artworkUrl100"] as! String, atIndex: index)
         
         return cell
     }
@@ -122,7 +145,6 @@ class MainViewController: UIViewController, UITableViewDelegate, UISearchBarDele
         self.responseData = nil
         self.tableView.reloadData()
         self.spinner.startAnimating()
-        print("Searching \(self.searchBar.text!)")
         if (self.searchTypeController.selectedSegmentIndex == 0){
             self.requestor.searchByTerm(self.searchBar.text!)
         } else {
@@ -135,11 +157,16 @@ class MainViewController: UIViewController, UITableViewDelegate, UISearchBarDele
     
     // ------------ ITUNES REQUESTOR ---------
     
-    func iTunesRequestCompleted() {
-        self.responseData = self.requestor.jsonData
+    func iTunesRequestCompleted(jsonData: NSArray) {
+        self.responseData = jsonData
         self.spinner.stopAnimating()
-        print(responseData)
         self.tableView.reloadData()
+    }
+    
+    func cellImageRequestCompleted(index: Int, withImage image: UIImage) {
+        let indexPath = NSIndexPath(forRow: index, inSection: 0)
+        let cell = self.tableView.cellForRowAtIndexPath(indexPath) as! CustomTableCell
+        cell.iconImage.image = image
     }
     
     //-------------- END ITUNES REQUESTOR ---------
