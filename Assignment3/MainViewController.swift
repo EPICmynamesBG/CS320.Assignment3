@@ -145,6 +145,7 @@ class MainViewController: UIViewController, UITableViewDelegate, UISearchBarDele
         self.responseData = nil
         self.tableView.reloadData()
         self.spinner.startAnimating()
+        UIApplication.sharedApplication().networkActivityIndicatorVisible = true
         if (self.searchTypeController.selectedSegmentIndex == 0){
             self.requestor.searchByTerm(self.searchBar.text!)
         } else {
@@ -160,6 +161,7 @@ class MainViewController: UIViewController, UITableViewDelegate, UISearchBarDele
     func iTunesRequestCompleted(jsonData: NSArray) {
         self.responseData = jsonData
         self.spinner.stopAnimating()
+        UIApplication.sharedApplication().networkActivityIndicatorVisible = false
         self.tableView.reloadData()
     }
     
