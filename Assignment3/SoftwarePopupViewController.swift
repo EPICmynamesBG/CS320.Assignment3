@@ -97,9 +97,12 @@ class SoftwarePopupViewController: UIViewController, iTunesRequestorDelegate {
     }
     
     func imageRequestCompleted(image: UIImage) {
+        let ratio: CGFloat = self.view.frame.size.width / image.size.width
         if (self.imageView1.image == nil){
+            self.imageView1.frame.size.height = image.size.height * ratio
             self.imageView1.image = image
         } else {
+            self.imageView2.frame.size.height = image.size.height * ratio
             self.imageView2.image = image
         }
     }

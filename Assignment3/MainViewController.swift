@@ -38,8 +38,9 @@ class MainViewController: UIViewController, UITableViewDelegate, UISearchBarDele
     func changeSearchType(){
         //only runs when a search has already been made and
         // the type changes, thus updating to new filter
-        if (self.tableView.numberOfRowsInSection(0) != 0){
+        if (self.searchBar.text?.isEmpty == false){
             self.initiateSearch()
+            self.searchBar.resignFirstResponder()
         }
     }
     
