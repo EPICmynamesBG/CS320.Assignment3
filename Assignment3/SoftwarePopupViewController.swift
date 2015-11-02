@@ -18,6 +18,7 @@ class SoftwarePopupViewController: UIViewController, iTunesRequestorDelegate {
     @IBOutlet weak var supportedDevices: UILabel!
     @IBOutlet weak var imageView1: UIImageView!
     @IBOutlet weak var imageView2: UIImageView!
+    @IBOutlet weak var appIcon: UIImageView!
     
     var requestor: iTunesRequestor!
     
@@ -42,7 +43,12 @@ class SoftwarePopupViewController: UIViewController, iTunesRequestorDelegate {
     }
     
     func setDataLabels(){
-        self.artistName.text = self.jsonData["artistName"] as? String
+        let developers: String! = self.jsonData["artistName"] as! String
+        let app: String! = self.jsonData["trackName"] as! String
+        self.artistName.text = "\(app)\nby \(developers)"
+        let iconUrl = self.jsonData["artworkUrl100"] as! String
+        self.requestor.getImageInBackground(iconUrl, withTag: self.appIcon.tag)
+        
         var supDevices = ""
         let devicesArray = self.jsonData["supportedDevices"] as! NSArray
         for (var i = 0; i < devicesArray.count ; i++){
@@ -67,9 +73,8 @@ class SoftwarePopupViewController: UIViewController, iTunesRequestorDelegate {
         self.genre.text = genres
         let imagesArray = self.jsonData["screenshotUrls"] as! NSArray
         if (imagesArray.count >= 2){
-            self.requestor.getImageInBackground(imagesArray[0] as! String)
-            self.requestor.getImageInBackground(imagesArray[1] as! String)
-            
+            self.requestor.getImageInBackground(imagesArray[0] as! String, withTag: self.imageView1.tag)
+            self.requestor.getImageInBackground(imagesArray[1] as! String, withTag: self.imageView2.tag)
         } else {
             self.imageView1.hidden = true
             self.imageView2.hidden = true
@@ -96,9 +101,13 @@ class SoftwarePopupViewController: UIViewController, iTunesRequestorDelegate {
         self.navigationController?.popViewControllerAnimated(false)
     }
     
-    func imageRequestCompleted(image: UIImage) {
+    func imageRequestCompleted(image: UIImage, withTag tag: Int) {
         let ratio: CGFloat = self.view.frame.size.width / image.size.width
-        if (self.imageView1.image == nil){
+        
+        if (self.appIcon.tag == tag){
+            self.appIcon.image = image
+        }
+        else if (self.imageView1.tag == tag){
             self.imageView1.frame.size.height = image.size.height * ratio
             self.imageView1.image = image
         } else {

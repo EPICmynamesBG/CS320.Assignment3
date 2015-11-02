@@ -80,7 +80,7 @@ class MainViewController: UIViewController, UITableViewDelegate, UISearchBarDele
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        //do nothing
+        //do nothing when cell is selected
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -127,7 +127,6 @@ class MainViewController: UIViewController, UITableViewDelegate, UISearchBarDele
             cell.iconImage.hidden = true
         }
         
-        //cell.iconImage.image = self.requestor.getIconImage(dict["artworkUrl100"] as! String)
         self.requestor.getCellImageInBackground(dict["artworkUrl100"] as! String, atIndex: index)
         
         return cell
@@ -175,13 +174,17 @@ class MainViewController: UIViewController, UITableViewDelegate, UISearchBarDele
         if (cell != nil){
             if (image.isEqual(nil)){
                 cell.iconImage.hidden = true
-                print("Hiding image at cell \(index)")
             } else {
                 cell.iconImage.image = image
-                print("Setting image \(index)")
             }
         } else {
-            print("Cell = nil")
+            print("Cell at index \(index) is returning nil")
+            let alert = UIAlertController(title: "Cell = nil", message: "Cell at index \(index) is returning nil", preferredStyle: UIAlertControllerStyle.Alert)
+            let cancel = UIAlertAction(title: "OK", style: UIAlertActionStyle.Cancel) { (action:UIAlertAction) -> Void in
+                self.tableView.reloadData()
+            }
+            alert.addAction(cancel)
+            self.presentViewController(alert, animated: true, completion: nil)
         }
         
     }

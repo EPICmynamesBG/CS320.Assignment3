@@ -8,10 +8,11 @@
 
 import Foundation
 import UIKit
+import SystemConfiguration
 
 @objc protocol iTunesRequestorDelegate {
     optional func iTunesRequestCompleted(jsonData: NSArray)
-    optional func imageRequestCompleted(image: UIImage)
+    optional func imageRequestCompleted(image: UIImage, withTag tag: Int)
     optional func cellImageRequestCompleted(index: Int, withImage image: UIImage)
     func noNetworkConnection()
 }
@@ -68,7 +69,7 @@ class iTunesRequestor {
             NSOperationQueue.mainQueue().addOperationWithBlock({ () -> Void in
                 self.makingRequest = false
                 self.delegate?.iTunesRequestCompleted!(json)
-            }) 
+            })
         }
         if (connectedToNetwork()){
             dataTask.resume()
@@ -87,7 +88,7 @@ class iTunesRequestor {
         return resultArray
     }
     
-    func getImageInBackground(url: String) {
+    func getImageInBackground(url: String, withTag tag:Int) {
         var fetchedImage: UIImage!
         let session: NSURLSession = NSURLSession.sharedSession()
         let dataTask: NSURLSessionDataTask = session.dataTaskWithURL(NSURL(string: url)!) { (data: NSData?, response: NSURLResponse?, error: NSError?) -> Void in
@@ -96,7 +97,7 @@ class iTunesRequestor {
             }
             NSOperationQueue.mainQueue().addOperationWithBlock({ () -> Void in
                 self.makingRequest = false
-                self.delegate?.imageRequestCompleted!(fetchedImage)
+                self.delegate?.imageRequestCompleted!(fetchedImage, withTag: tag)
             })
         }
         if (connectedToNetwork()){
@@ -117,35 +118,32 @@ class iTunesRequestor {
                 self.delegate?.cellImageRequestCompleted!(index, withImage: fetchedImage)
             })
         }
-        if (connectedToNetwork()){
-            dataTask.resume()
-        }
+        dataTask.resume()
+        
     }
     
     func connectedToNetwork() -> Bool {
-        var status:Bool = false
+        var zeroAddress = sockaddr_in(sin_len: 0, sin_family: 0, sin_port: 0, sin_addr: in_addr(s_addr: 0), sin_zero: (0, 0, 0, 0, 0, 0, 0, 0))
+        zeroAddress.sin_len = UInt8(sizeofValue(zeroAddress))
+        zeroAddress.sin_family = sa_family_t(AF_INET)
         
-        let url = NSURL(string: "https://google.com")
-        let request = NSMutableURLRequest(URL: url!)
-        request.HTTPMethod = "HEAD"
-        request.cachePolicy = NSURLRequestCachePolicy.ReloadIgnoringLocalAndRemoteCacheData
-        request.timeoutInterval = 10.0
-        
-        var response:NSURLResponse?
-        
-        do {
-            let _ = try NSURLConnection.sendSynchronousRequest(request, returningResponse: &response) as NSData?
+        let defaultRouteReachability = withUnsafePointer(&zeroAddress) {
+            SCNetworkReachabilityCreateWithAddress(kCFAllocatorDefault, UnsafePointer($0))
         }
-        catch let error as NSError {
+        
+        var flags: SCNetworkReachabilityFlags = SCNetworkReachabilityFlags(rawValue: 0)
+        if SCNetworkReachabilityGetFlags(defaultRouteReachability!, &flags) == false {
+            return false
+        }
+        
+        let isReachable = flags == .Reachable
+        let needsConnection = flags == .ConnectionRequired
+        
+        let status = isReachable && !needsConnection
+        if (status == false){
             self.delegate?.noNetworkConnection()
-            print(error.localizedDescription)
         }
         
-        if let httpResponse = response as? NSHTTPURLResponse {
-            if httpResponse.statusCode == 200 {
-                status = true
-            }
-        }
         return status
     }
     
