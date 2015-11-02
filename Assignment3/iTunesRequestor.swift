@@ -13,6 +13,7 @@ import UIKit
     optional func iTunesRequestCompleted(jsonData: NSArray)
     optional func imageRequestCompleted(image: UIImage)
     optional func cellImageRequestCompleted(index: Int, withImage image: UIImage)
+    func noNetworkConnection()
 }
 
 class iTunesRequestor {
@@ -64,13 +65,14 @@ class iTunesRequestor {
             if (data != nil && error == nil){
                 json = self.parseJSON(data)
             }
-            dispatch_async(dispatch_get_main_queue(), { () -> Void in
+            NSOperationQueue.mainQueue().addOperationWithBlock({ () -> Void in
                 self.makingRequest = false
                 self.delegate?.iTunesRequestCompleted!(json)
-            })
-            
+            }) 
         }
-        dataTask.resume()
+        if (connectedToNetwork()){
+            dataTask.resume()
+        }
     }
     
     func parseJSON(data: NSData?) -> NSArray{
@@ -85,13 +87,6 @@ class iTunesRequestor {
         return resultArray
     }
     
-    //DEPRACATED
-    func getIconImage(url: String) -> UIImage{
-        let data:NSData = NSData(contentsOfURL: NSURL(string: url)!)!
-        let icon = UIImage(data: data)!
-        return icon
-    }
-    
     func getImageInBackground(url: String) {
         var fetchedImage: UIImage!
         let session: NSURLSession = NSURLSession.sharedSession()
@@ -99,13 +94,14 @@ class iTunesRequestor {
             if (data != nil && error == nil){
                 fetchedImage = UIImage(data: data!)!
             }
-            dispatch_async(dispatch_get_main_queue(), { () -> Void in
+            NSOperationQueue.mainQueue().addOperationWithBlock({ () -> Void in
                 self.makingRequest = false
                 self.delegate?.imageRequestCompleted!(fetchedImage)
             })
-            
         }
-        dataTask.resume()
+        if (connectedToNetwork()){
+            dataTask.resume()
+        }
     }
     
     func getCellImageInBackground(url: String, atIndex index: Int) {
@@ -116,13 +112,41 @@ class iTunesRequestor {
             if (data != nil && error == nil){
                 fetchedImage = UIImage(data: data!)!
             }
-            dispatch_async(dispatch_get_main_queue(), { () -> Void in
+            NSOperationQueue.mainQueue().addOperationWithBlock({ () -> Void in
                 self.makingRequest = false
                 self.delegate?.cellImageRequestCompleted!(index, withImage: fetchedImage)
             })
-            
         }
-        dataTask.resume()
+        if (connectedToNetwork()){
+            dataTask.resume()
+        }
+    }
+    
+    func connectedToNetwork() -> Bool {
+        var status:Bool = false
+        
+        let url = NSURL(string: "https://google.com")
+        let request = NSMutableURLRequest(URL: url!)
+        request.HTTPMethod = "HEAD"
+        request.cachePolicy = NSURLRequestCachePolicy.ReloadIgnoringLocalAndRemoteCacheData
+        request.timeoutInterval = 10.0
+        
+        var response:NSURLResponse?
+        
+        do {
+            let _ = try NSURLConnection.sendSynchronousRequest(request, returningResponse: &response) as NSData?
+        }
+        catch let error as NSError {
+            self.delegate?.noNetworkConnection()
+            print(error.localizedDescription)
+        }
+        
+        if let httpResponse = response as? NSHTTPURLResponse {
+            if httpResponse.statusCode == 200 {
+                status = true
+            }
+        }
+        return status
     }
     
 }

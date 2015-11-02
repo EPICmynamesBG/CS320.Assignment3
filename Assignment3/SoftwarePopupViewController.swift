@@ -106,5 +106,15 @@ class SoftwarePopupViewController: UIViewController, iTunesRequestorDelegate {
             self.imageView2.image = image
         }
     }
+    
+    func noNetworkConnection() {
+        UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+        let alert = UIAlertController(title: "No Internet Connection", message: "No Internet Connection Found", preferredStyle: UIAlertControllerStyle.Alert)
+        let cancel = UIAlertAction(title: "OK", style: UIAlertActionStyle.Cancel) { (action:UIAlertAction) -> Void in
+            //do nothing
+        }
+        alert.addAction(cancel)
+        self.presentViewController(alert, animated: true, completion: nil)
+    }
 }
 

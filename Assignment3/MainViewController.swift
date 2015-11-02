@@ -168,8 +168,34 @@ class MainViewController: UIViewController, UITableViewDelegate, UISearchBarDele
     
     func cellImageRequestCompleted(index: Int, withImage image: UIImage) {
         let indexPath = NSIndexPath(forRow: index, inSection: 0)
-        let cell = self.tableView.cellForRowAtIndexPath(indexPath) as! CustomTableCell
-        cell.iconImage.image = image
+        var cell: CustomTableCell!
+        if (self.tableView.cellForRowAtIndexPath(indexPath) != nil){
+            cell = self.tableView.cellForRowAtIndexPath(indexPath) as! CustomTableCell
+        }
+        if (cell != nil){
+            if (image.isEqual(nil)){
+                cell.iconImage.hidden = true
+                print("Hiding image at cell \(index)")
+            } else {
+                cell.iconImage.image = image
+                print("Setting image \(index)")
+            }
+        } else {
+            print("Cell = nil")
+        }
+        
+    }
+    
+    func noNetworkConnection() {
+        self.spinner.stopAnimating()
+        UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+        let alert = UIAlertController(title: "No Internet Connection", message: "No Internet Connection Found", preferredStyle: UIAlertControllerStyle.Alert)
+        let cancel = UIAlertAction(title: "OK", style: UIAlertActionStyle.Cancel) { (action:UIAlertAction) -> Void in
+            //do nothing
+        }
+        alert.addAction(cancel)
+        self.presentViewController(alert, animated: true, completion: nil)
+        
     }
     
     //-------------- END ITUNES REQUESTOR ---------
