@@ -99,7 +99,8 @@
                                     </tableViewCell>
                                 </prototypes>
                                 <connections>
-                                    <outlet property="delegate" destination="o6E-j1-nY6" id="ZPI-2u-XMx"/>
+                                    <outlet property="dataSource" destination="o6E-j1-nY6" id="14v-bq-UJv"/>
+                                    <outlet property="delegate" destination="o6E-j1-nY6" id="XHN-0H-TaS"/>
                                 </connections>
                             </tableView>
                         </subviews>

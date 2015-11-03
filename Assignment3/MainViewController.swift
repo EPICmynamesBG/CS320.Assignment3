@@ -24,7 +24,7 @@ class MainViewController: UIViewController, UITableViewDelegate, UISearchBarDele
         
         requestor = iTunesRequestor()
         self.requestor.delegate = self
-        
+                
         self.searchTypeController.addTarget(self, action: "changeSearchType", forControlEvents: UIControlEvents.ValueChanged)
         let tapOutsideSearch: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "tap")
         self.view.addGestureRecognizer(tapOutsideSearch)
@@ -78,16 +78,19 @@ class MainViewController: UIViewController, UITableViewDelegate, UISearchBarDele
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        //code
+        //do nothing when cell is selected
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 0
+        if (self.responseData == nil){
+            return 0
+        }
+        return self.responseData.count
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell:CustomTableCell = self.tableView.dequeueReusableCellWithIdentifier("customTableCell") as! CustomTableCell
-        
+        cell.title.text = "TEXT"
         
         return cell
     }
@@ -116,7 +119,6 @@ class MainViewController: UIViewController, UITableViewDelegate, UISearchBarDele
     func searchBarTextDidEndEditing(searchBar: UISearchBar) {
         UIApplication.sharedApplication().networkActivityIndicatorVisible = true
         self.spinner.startAnimating()
-        print("Done editing")
     }
     
     // ------------ END SEARCH BAR ----------
@@ -129,7 +131,7 @@ class MainViewController: UIViewController, UITableViewDelegate, UISearchBarDele
         UIApplication.sharedApplication().networkActivityIndicatorVisible = false
         
         print(responseData)
-        //self.tableView.reloadData() <-- uncomment to get table to refresh
+        self.tableView.reloadData() //<-- uncomment to get table to refresh
     }
     
     func cellImageRequestCompleted(index: Int, withImage image: UIImage) {
