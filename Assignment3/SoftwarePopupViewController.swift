@@ -12,12 +12,11 @@ class SoftwarePopupViewController: UIViewController, iTunesRequestorDelegate {
     
     var jsonData: NSDictionary!
     @IBOutlet weak var scrollView: UIScrollView!
+    @IBOutlet weak var screenshotScrollView: UIScrollView!
     @IBOutlet weak var artistName: UILabel!
     @IBOutlet weak var longDescription: UILabel!
     @IBOutlet weak var genre: UILabel!
     @IBOutlet weak var supportedDevices: UILabel!
-    @IBOutlet weak var imageView1: UIImageView!
-    @IBOutlet weak var imageView2: UIImageView!
     @IBOutlet weak var appIcon: UIImageView!
     
     var requestor: iTunesRequestor!
@@ -32,6 +31,9 @@ class SoftwarePopupViewController: UIViewController, iTunesRequestorDelegate {
         
         self.scrollView.contentSize.width = self.view.frame.size.width - 16
         self.scrollView.frame.size.width = self.view.frame.size.width
+        
+        self.screenshotScrollView.contentSize.height = 400
+        self.scrollView.frame.size.height = 400
         
         let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "tap")
         let tap2: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "doubleTap")
@@ -73,14 +75,47 @@ class SoftwarePopupViewController: UIViewController, iTunesRequestorDelegate {
         }
         self.genre.text = genres
         let imagesArray = self.jsonData["screenshotUrls"] as! NSArray
-        if (imagesArray.count >= 2){
-            self.requestor.getImageInBackground(imagesArray[0] as! String, withTag: self.imageView1.tag)
-            self.requestor.getImageInBackground(imagesArray[1] as! String, withTag: self.imageView2.tag)
-        } else {
-            self.imageView1.hidden = true
-            self.imageView2.hidden = true
+        for (var i = 0; i < imagesArray.count; i++) {
+            let imageString = imagesArray[i] as! String
+            requestor.getImageInBackground(imageString, withTag: i + 2)
         }
         
+    }
+    
+    private func createImageViewWithImage(image: UIImage, withTag tag:Int){
+        var imageView = UIImageView(image: image)
+        let ratio: CGFloat = self.screenshotScrollView.frame.size.height / image.size.height
+        imageView.frame.size.height = self.screenshotScrollView.frame.size.height
+        imageView.frame.size.width = image.size.width * ratio
+        
+        imageView.tag = tag
+        imageView.hidden = true
+        self.screenshotScrollView.addSubview(imageView)
+        
+        if (self.screenshotScrollView.subviews.count == 0){
+            imageView.addConstraint(NSLayoutConstraint(item: imageView, attribute: NSLayoutAttribute.LeadingMargin, relatedBy: NSLayoutRelation.Equal, toItem: self.screenshotScrollView, attribute: NSLayoutAttribute.Leading, multiplier: 1.0, constant: 8.0))
+            imageView.addConstraint(NSLayoutConstraint(item: imageView, attribute: NSLayoutAttribute.TopMargin, relatedBy: NSLayoutRelation.Equal, toItem: self.screenshotScrollView, attribute: NSLayoutAttribute.Top, multiplier: 1.0, constant: 8.0))
+        } else {
+            var subviews = self.screenshotScrollView.subviews
+            var highestTag: Int = 0
+            var highestTagIndex: Int = 0
+            
+            for (var i = 0; i < subviews.count; i++){
+                let iView: UIImageView? = subviews[i] as? UIImageView
+                if (iView != nil){
+                    if (iView!.tag > highestTag){
+                        highestTag = (iView?.tag)!
+                        highestTagIndex = i
+                    }
+                }
+            }
+            let rightMostView: UIImageView = subviews[highestTagIndex] as! UIImageView
+            imageView.addConstraint(NSLayoutConstraint(item: imageView, attribute: NSLayoutAttribute.LeadingMargin, relatedBy: NSLayoutRelation.Equal, toItem: rightMostView, attribute: NSLayoutAttribute.Leading, multiplier: 1.0, constant: 8.0))
+            imageView.addConstraint(NSLayoutConstraint(item: imageView, attribute: NSLayoutAttribute.TopMargin, relatedBy: NSLayoutRelation.Equal, toItem: self.screenshotScrollView, attribute: NSLayoutAttribute.Top, multiplier: 1.0, constant: 8.0))
+            rightMostView.removeConstraint(NSLayoutConstraint(item: rightMostView, attribute: NSLayoutAttribute.RightMargin, relatedBy: NSLayoutRelation.Equal, toItem: self.screenshotScrollView, attribute: NSLayoutAttribute.Right, multiplier: 1.0, constant: 8.0))
+            imageView.addConstraint(NSLayoutConstraint(item: imageView, attribute: NSLayoutAttribute.RightMargin, relatedBy: NSLayoutRelation.Equal, toItem: self.screenshotScrollView, attribute: NSLayoutAttribute.Right, multiplier: 1.0, constant: 8.0))
+        }
+        imageView.hidden = false
     }
     
     func tap(){
@@ -103,18 +138,12 @@ class SoftwarePopupViewController: UIViewController, iTunesRequestorDelegate {
     }
     
     func imageRequestCompleted(image: UIImage, withTag tag: Int) {
-        let ratio: CGFloat = self.view.frame.size.width / image.size.width
-        
         if (self.appIcon.tag == tag){
             self.appIcon.image = image
+        } else { //tag >=2
+            createImageViewWithImage(image, withTag: tag)
         }
-        else if (self.imageView1.tag == tag){
-            self.imageView1.frame.size.height = image.size.height * ratio
-            self.imageView1.image = image
-        } else {
-            self.imageView2.frame.size.height = image.size.height * ratio
-            self.imageView2.image = image
-        }
+        
     }
     
     func noNetworkConnection() {
