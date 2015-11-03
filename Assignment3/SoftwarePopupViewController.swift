@@ -46,6 +46,7 @@ class SoftwarePopupViewController: UIViewController, iTunesRequestorDelegate {
         let developers: String! = self.jsonData["artistName"] as! String
         let app: String! = self.jsonData["trackName"] as! String
         self.artistName.text = "\(app)\nby \(developers)"
+        
         let iconUrl = self.jsonData["artworkUrl100"] as! String
         self.requestor.getImageInBackground(iconUrl, withTag: self.appIcon.tag)
         

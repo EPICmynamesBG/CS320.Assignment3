@@ -179,7 +179,7 @@ class MainViewController: UIViewController, UITableViewDelegate, UISearchBarDele
             }
         } else {
             print("Cell at index \(index) is returning nil")
-            let alert = UIAlertController(title: "Cell = nil", message: "Cell at index \(index) is returning nil", preferredStyle: UIAlertControllerStyle.Alert)
+            let alert = UIAlertController(title: "Crash Prevented", message: "Cell at index \(index) is returning nil", preferredStyle: UIAlertControllerStyle.Alert)
             let cancel = UIAlertAction(title: "OK", style: UIAlertActionStyle.Cancel) { (action:UIAlertAction) -> Void in
                 self.tableView.reloadData()
             }
