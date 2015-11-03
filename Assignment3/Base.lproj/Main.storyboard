@@ -370,20 +370,57 @@
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kcz-iO-Nke">
                                         <rect key="frame" x="8" y="144" width="584" height="400"/>
                                         <subviews>
-                                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dKW-ZO-68Q">
+                                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" alwaysBounceHorizontal="YES" showsVerticalScrollIndicator="NO" indicatorStyle="white" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="WNz-TU-i4N">
                                                 <rect key="frame" x="0.0" y="0.0" width="584" height="400"/>
                                                 <animations/>
-                                            </scrollView>
+                                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="10" minimumInteritemSpacing="10" id="q8c-pe-Nnc">
+                                                    <size key="itemSize" width="159" height="396"/>
+                                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                                </collectionViewFlowLayout>
+                                                <cells>
+                                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="screenshotCell" id="AK2-rc-sX6" customClass="CustomCollectionCell" customModule="Assignment3" customModuleProvider="target">
+                                                        <rect key="frame" x="0.0" y="2" width="159" height="396"/>
+                                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                                            <rect key="frame" x="0.0" y="0.0" width="159" height="396"/>
+                                                            <autoresizingMask key="autoresizingMask"/>
+                                                            <subviews>
+                                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="ecJ-KR-Acr">
+                                                                    <rect key="frame" x="0.0" y="0.0" width="159" height="396"/>
+                                                                    <animations/>
+                                                                </imageView>
+                                                            </subviews>
+                                                            <animations/>
+                                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                                        </view>
+                                                        <animations/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="trailingMargin" secondItem="ecJ-KR-Acr" secondAttribute="trailing" constant="-8" id="Hec-sK-sDC"/>
+                                                            <constraint firstAttribute="bottomMargin" secondItem="ecJ-KR-Acr" secondAttribute="bottom" constant="-8" id="ND2-Bk-SGX"/>
+                                                            <constraint firstItem="ecJ-KR-Acr" firstAttribute="leading" secondItem="AK2-rc-sX6" secondAttribute="leadingMargin" constant="-8" id="ghI-3r-MG9"/>
+                                                            <constraint firstItem="ecJ-KR-Acr" firstAttribute="top" secondItem="AK2-rc-sX6" secondAttribute="topMargin" constant="-8" id="uhg-Nl-mdC"/>
+                                                        </constraints>
+                                                        <connections>
+                                                            <outlet property="image" destination="ecJ-KR-Acr" id="pqt-2O-qI5"/>
+                                                        </connections>
+                                                    </collectionViewCell>
+                                                </cells>
+                                                <connections>
+                                                    <outlet property="dataSource" destination="cVv-Cy-r4C" id="UtS-Tt-zac"/>
+                                                    <outlet property="delegate" destination="cVv-Cy-r4C" id="QDh-Yj-fj8"/>
+                                                </connections>
+                                            </collectionView>
                                         </subviews>
                                         <animations/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <constraints>
-                                            <constraint firstItem="dKW-ZO-68Q" firstAttribute="centerX" secondItem="kcz-iO-Nke" secondAttribute="centerX" id="Af3-4v-alt"/>
-                                            <constraint firstItem="dKW-ZO-68Q" firstAttribute="top" secondItem="kcz-iO-Nke" secondAttribute="top" id="FcH-At-UBJ"/>
-                                            <constraint firstAttribute="trailing" secondItem="dKW-ZO-68Q" secondAttribute="trailing" id="jzj-5D-pUr"/>
-                                            <constraint firstItem="dKW-ZO-68Q" firstAttribute="centerY" secondItem="kcz-iO-Nke" secondAttribute="centerY" id="oVs-98-nhR"/>
-                                            <constraint firstAttribute="bottom" secondItem="dKW-ZO-68Q" secondAttribute="bottom" id="tUJ-6q-3nf"/>
-                                            <constraint firstItem="dKW-ZO-68Q" firstAttribute="leading" secondItem="kcz-iO-Nke" secondAttribute="leading" id="vDa-WZ-Z1M"/>
+                                            <constraint firstAttribute="trailing" secondItem="WNz-TU-i4N" secondAttribute="trailing" id="5cy-Id-gXE"/>
+                                            <constraint firstAttribute="bottom" secondItem="WNz-TU-i4N" secondAttribute="bottom" id="WFR-hU-nJk"/>
+                                            <constraint firstItem="WNz-TU-i4N" firstAttribute="leading" secondItem="kcz-iO-Nke" secondAttribute="leading" id="YPv-ta-xKT"/>
+                                            <constraint firstItem="WNz-TU-i4N" firstAttribute="top" secondItem="kcz-iO-Nke" secondAttribute="top" id="ge1-hK-FZb"/>
                                             <constraint firstAttribute="height" priority="250" constant="400" id="z1l-eO-OOX"/>
                                         </constraints>
                                     </view>
@@ -433,9 +470,9 @@
                     <connections>
                         <outlet property="appIcon" destination="BTy-Gk-VkC" id="zY8-2s-bS8"/>
                         <outlet property="artistName" destination="wKl-S8-fhc" id="l6D-Gc-PU5"/>
+                        <outlet property="collectionView" destination="WNz-TU-i4N" id="NaE-G8-A9L"/>
                         <outlet property="genre" destination="EJj-iS-63Z" id="8sC-E3-D4Z"/>
                         <outlet property="longDescription" destination="ISS-3b-ryZ" id="LiG-af-yEx"/>
-                        <outlet property="screenshotScrollView" destination="dKW-ZO-68Q" id="KCF-PT-aHu"/>
                         <outlet property="scrollView" destination="orw-a1-I0F" id="36B-4w-1oH"/>
                         <outlet property="supportedDevices" destination="zBW-pK-may" id="04g-ao-2U7"/>
                     </connections>

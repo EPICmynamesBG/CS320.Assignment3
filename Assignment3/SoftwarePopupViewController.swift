@@ -8,16 +8,20 @@
 
 import UIKit
 
-class SoftwarePopupViewController: UIViewController, iTunesRequestorDelegate {
+class SoftwarePopupViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, UICollectionViewDataSource, iTunesRequestorDelegate {
     
     var jsonData: NSDictionary!
     @IBOutlet weak var scrollView: UIScrollView!
-    @IBOutlet weak var screenshotScrollView: UIScrollView!
     @IBOutlet weak var artistName: UILabel!
     @IBOutlet weak var longDescription: UILabel!
     @IBOutlet weak var genre: UILabel!
     @IBOutlet weak var supportedDevices: UILabel!
     @IBOutlet weak var appIcon: UIImageView!
+    @IBOutlet weak var collectionView: UICollectionView!
+    var screenshotArray : Array<UIImage>!
+    var numScreenshots: Int!
+    var scaleRatio: CGFloat!
+    var imgWidth: CGFloat!
     
     var requestor: iTunesRequestor!
     
@@ -28,12 +32,10 @@ class SoftwarePopupViewController: UIViewController, iTunesRequestorDelegate {
         self.requestor = iTunesRequestor()
         self.requestor.delegate = self
         self.setDataLabels()
+        self.screenshotArray = Array<UIImage>()
         
         self.scrollView.contentSize.width = self.view.frame.size.width - 16
         self.scrollView.frame.size.width = self.view.frame.size.width
-        
-        self.screenshotScrollView.contentSize.height = 400
-        self.scrollView.frame.size.height = 400
         
         let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "tap")
         let tap2: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "doubleTap")
@@ -75,47 +77,12 @@ class SoftwarePopupViewController: UIViewController, iTunesRequestorDelegate {
         }
         self.genre.text = genres
         let imagesArray = self.jsonData["screenshotUrls"] as! NSArray
+        numScreenshots = imagesArray.count
         for (var i = 0; i < imagesArray.count; i++) {
             let imageString = imagesArray[i] as! String
             requestor.getImageInBackground(imageString, withTag: i + 2)
         }
         
-    }
-    
-    private func createImageViewWithImage(image: UIImage, withTag tag:Int){
-        var imageView = UIImageView(image: image)
-        let ratio: CGFloat = self.screenshotScrollView.frame.size.height / image.size.height
-        imageView.frame.size.height = self.screenshotScrollView.frame.size.height
-        imageView.frame.size.width = image.size.width * ratio
-        
-        imageView.tag = tag
-        imageView.hidden = true
-        self.screenshotScrollView.addSubview(imageView)
-        
-        if (self.screenshotScrollView.subviews.count == 0){
-            imageView.addConstraint(NSLayoutConstraint(item: imageView, attribute: NSLayoutAttribute.LeadingMargin, relatedBy: NSLayoutRelation.Equal, toItem: self.screenshotScrollView, attribute: NSLayoutAttribute.Leading, multiplier: 1.0, constant: 8.0))
-            imageView.addConstraint(NSLayoutConstraint(item: imageView, attribute: NSLayoutAttribute.TopMargin, relatedBy: NSLayoutRelation.Equal, toItem: self.screenshotScrollView, attribute: NSLayoutAttribute.Top, multiplier: 1.0, constant: 8.0))
-        } else {
-            var subviews = self.screenshotScrollView.subviews
-            var highestTag: Int = 0
-            var highestTagIndex: Int = 0
-            
-            for (var i = 0; i < subviews.count; i++){
-                let iView: UIImageView? = subviews[i] as? UIImageView
-                if (iView != nil){
-                    if (iView!.tag > highestTag){
-                        highestTag = (iView?.tag)!
-                        highestTagIndex = i
-                    }
-                }
-            }
-            let rightMostView: UIImageView = subviews[highestTagIndex] as! UIImageView
-            imageView.addConstraint(NSLayoutConstraint(item: imageView, attribute: NSLayoutAttribute.LeadingMargin, relatedBy: NSLayoutRelation.Equal, toItem: rightMostView, attribute: NSLayoutAttribute.Leading, multiplier: 1.0, constant: 8.0))
-            imageView.addConstraint(NSLayoutConstraint(item: imageView, attribute: NSLayoutAttribute.TopMargin, relatedBy: NSLayoutRelation.Equal, toItem: self.screenshotScrollView, attribute: NSLayoutAttribute.Top, multiplier: 1.0, constant: 8.0))
-            rightMostView.removeConstraint(NSLayoutConstraint(item: rightMostView, attribute: NSLayoutAttribute.RightMargin, relatedBy: NSLayoutRelation.Equal, toItem: self.screenshotScrollView, attribute: NSLayoutAttribute.Right, multiplier: 1.0, constant: 8.0))
-            imageView.addConstraint(NSLayoutConstraint(item: imageView, attribute: NSLayoutAttribute.RightMargin, relatedBy: NSLayoutRelation.Equal, toItem: self.screenshotScrollView, attribute: NSLayoutAttribute.Right, multiplier: 1.0, constant: 8.0))
-        }
-        imageView.hidden = false
     }
     
     func tap(){
@@ -137,11 +104,57 @@ class SoftwarePopupViewController: UIViewController, iTunesRequestorDelegate {
         self.navigationController?.popViewControllerAnimated(false)
     }
     
+    // ------ UICollectionView Delegate
+    
+    func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCellWithReuseIdentifier("screenshotCell", forIndexPath: indexPath) as! CustomCollectionCell
+        if (self.screenshotArray.count != 0){
+            let screenshot = self.screenshotArray[indexPath.row]
+            cell.image.image = screenshot
+        }
+        
+        return cell
+    }
+    
+    func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        let imagesArray = self.jsonData["screenshotUrls"] as! NSArray
+        return imagesArray.count
+    }
+    
+    func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
+        return 1
+    }
+    
+    func collectionView(collectionView: UICollectionView,
+        layout collectionViewLayout: UICollectionViewLayout,
+        sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
+            let calculatedCollectionHeight = self.collectionView.frame.height - 2
+            if (self.scaleRatio != nil){
+                return CGSize(width: self.imgWidth * self.scaleRatio, height: calculatedCollectionHeight)
+            }
+            
+            return CGSize(width: 225, height: calculatedCollectionHeight)
+    }
+    
+    func collectionView(collectionView: UICollectionView,
+        layout collectionViewLayout: UICollectionViewLayout,
+        insetForSectionAtIndex section: Int) -> UIEdgeInsets {
+            return UIEdgeInsets(top: 1, left: 1, bottom: 1, right: 1)
+    }
+    
+    
+    // -------- iTunesRequestor Delegate
+    
     func imageRequestCompleted(image: UIImage, withTag tag: Int) {
         if (self.appIcon.tag == tag){
             self.appIcon.image = image
-        } else { //tag >=2
-            createImageViewWithImage(image, withTag: tag)
+        } else {
+            self.imgWidth = image.size.width
+            self.scaleRatio = (self.collectionView.frame.height - 2)/image.size.height
+            self.screenshotArray.append(image)
+        }
+        if (numScreenshots == self.screenshotArray.count){
+            self.collectionView.reloadData()
         }
         
     }
