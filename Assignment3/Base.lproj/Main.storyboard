@@ -306,11 +306,11 @@
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="genre" destination="MGE-a3-zQg" id="AaI-Zn-tuM"/>
                         <outlet property="longDescription" destination="TUK-To-RNn" id="ZjJ-TR-7nj"/>
+                        <outlet property="price" destination="a5M-xA-moM" id="CVV-lV-viG"/>
+                        <outlet property="primaryGenre" destination="MGE-a3-zQg" id="ai1-mJ-bSF"/>
                         <outlet property="scrollView" destination="ja7-fg-7Vz" id="5Lg-Fc-gOy"/>
                         <outlet property="trackName" destination="ta3-Fg-nxV" id="Lrj-Xa-5UI"/>
-                        <outlet property="trackPrice" destination="a5M-xA-moM" id="rAu-Su-dP0"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="WtL-cz-WlB" userLabel="First Responder" sceneMemberID="firstResponder"/>
