@@ -90,8 +90,12 @@ class MainViewController: UIViewController, UITableViewDelegate, UISearchBarDele
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell:CustomTableCell = self.tableView.dequeueReusableCellWithIdentifier("customTableCell") as! CustomTableCell
-        cell.title.text = "TEXT"
-        
+        //cell.title.text = "TEXT"
+        let dictionary:NSDictionary = self.responseData[indexPath.row] as! NSDictionary
+        cell.title.text = dictionary["trackName"] as? String
+        cell.subtitle.text = dictionary["collectionName"] as? String
+       // cell.iconImage.image = dictionary["artworkUrl60"] as?
+        self.requestor.getCellImageInBackground(dictionary["artworkUrl100"] as! String, atIndex: indexPath.row)
         return cell
     }
     
@@ -136,8 +140,18 @@ class MainViewController: UIViewController, UITableViewDelegate, UISearchBarDele
     
     func cellImageRequestCompleted(index: Int, withImage image: UIImage) {
         let indexPath = NSIndexPath(forRow: index, inSection: 0)
-        let cell = self.tableView.cellForRowAtIndexPath(indexPath) as! CustomTableCell
-        cell.iconImage.image = image
+        var cell:CustomTableCell!
+        if (self.tableView.cellForRowAtIndexPath(indexPath) != nil){
+            cell = self.tableView.cellForRowAtIndexPath(indexPath) as! CustomTableCell
+        }
+        if(cell != nil){
+            cell.iconImage.image = image
+        } else {
+            print("The cell is returning nil");
+            
+        }
+       
+        
     }
     
     //-------------- END ITUNES REQUESTOR ---------
