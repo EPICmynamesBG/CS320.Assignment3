@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		BC2204731BEBA4A8002A7FA2 /* CustomCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC2204721BEBA4A8002A7FA2 /* CustomCollectionCell.swift */; };
 		BCA147B21BDFB7F800481DF6 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCA147B11BDFB7F800481DF6 /* AppDelegate.swift */; };
 		BCA147B41BDFB7F800481DF6 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCA147B31BDFB7F800481DF6 /* MainViewController.swift */; };
 		BCA147B71BDFB7F800481DF6 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BCA147B51BDFB7F800481DF6 /* Main.storyboard */; };
@@ -39,6 +40,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		BC2204721BEBA4A8002A7FA2 /* CustomCollectionCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomCollectionCell.swift; sourceTree = "<group>"; };
 		BCA147AE1BDFB7F800481DF6 /* Assignment3.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Assignment3.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BCA147B11BDFB7F800481DF6 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		BCA147B31BDFB7F800481DF6 /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
@@ -140,6 +142,7 @@
 			children = (
 				BCA147B31BDFB7F800481DF6 /* MainViewController.swift */,
 				BCD506591BDFC36600F798C1 /* CustomTableCell.swift */,
+				BC2204721BEBA4A8002A7FA2 /* CustomCollectionCell.swift */,
 				BCD506621BDFE91000F798C1 /* MoviePopupViewController.swift */,
 				BCD506601BDFE11C00F798C1 /* AVPopupViewController.swift */,
 				BCD506641BDFE98400F798C1 /* SoftwarePopupViewController.swift */,
@@ -299,6 +302,7 @@
 				BCD506611BDFE11C00F798C1 /* AVPopupViewController.swift in Sources */,
 				BCA147B41BDFB7F800481DF6 /* MainViewController.swift in Sources */,
 				BCD506651BDFE98400F798C1 /* SoftwarePopupViewController.swift in Sources */,
+				BC2204731BEBA4A8002A7FA2 /* CustomCollectionCell.swift in Sources */,
 				BCA147B21BDFB7F800481DF6 /* AppDelegate.swift in Sources */,
 				BCD5065C1BDFCC6900F798C1 /* iTunesRequestor.swift in Sources */,
 				BCD5065A1BDFC36600F798C1 /* CustomTableCell.swift in Sources */,
