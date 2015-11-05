@@ -168,11 +168,11 @@ class MainViewController: UIViewController, UITableViewDelegate, UISearchBarDele
     func cellImageRequestCompleted(index: Int, withImage image: UIImage) {
         let indexPath = NSIndexPath(forRow: index, inSection: 0)
         var cell: CustomTableCell!
-        if (self.tableView.cellForRowAtIndexPath(indexPath) != nil){
+        if (self.tableView.cellForRowAtIndexPath(indexPath) != nil){ //making sure cell exists
             cell = self.tableView.cellForRowAtIndexPath(indexPath) as! CustomTableCell
         }
-        if (cell != nil){
-            if (image.isEqual(nil)){
+        if (cell != nil){ //checking that the casted cell exists
+            if (image.isEqual(nil)){ //making sure image exists
                 cell.iconImage.hidden = true
             } else {
                 cell.iconImage.image = image
@@ -181,7 +181,7 @@ class MainViewController: UIViewController, UITableViewDelegate, UISearchBarDele
             print("Cell at index \(index) is returning nil")
             let alert = UIAlertController(title: "Crash Prevented", message: "Cell at index \(index) is returning nil", preferredStyle: UIAlertControllerStyle.Alert)
             let cancel = UIAlertAction(title: "OK", style: UIAlertActionStyle.Cancel) { (action:UIAlertAction) -> Void in
-                self.tableView.reloadData()
+                //self.tableView.reloadData()
             }
             alert.addAction(cancel)
             self.presentViewController(alert, animated: true, completion: nil)

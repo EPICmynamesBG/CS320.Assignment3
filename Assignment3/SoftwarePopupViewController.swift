@@ -86,7 +86,7 @@ class SoftwarePopupViewController: UIViewController, UICollectionViewDelegate, U
     }
     
     func tap(){
-        let label = UILabel(frame: CGRect(x: 0, y: 16, width: self.view.bounds.width, height: 17))
+        let label = UILabel(frame: CGRect(x: 0, y: 16, width: self.view.bounds.width, height: 20))
         label.text = "Double tap to go back"
         label.textColor = UIColor.lightGrayColor()
         label.textAlignment = NSTextAlignment.Center
