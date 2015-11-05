@@ -15,9 +15,15 @@ class SoftwarePopupViewController: UIViewController, iTunesRequestorDelegate {
     @IBOutlet weak var artistName: UILabel!
     @IBOutlet weak var genres: UILabel!
     @IBOutlet weak var longDescription: UILabel!
-    @IBOutlet weak var imageView1: UIImageView!
-    @IBOutlet weak var imageView2: UIImageView!
     @IBOutlet weak var supportedDevices: UILabel!
+    @IBOutlet weak var appIcon: UIImageView!
+    @IBOutlet weak var collectionView: UICollectionView!
+    
+    
+    var screenshotArray : Array<UIImage>!
+    var numScreenshots: Int!
+    var scaleRatio: CGFloat!
+    var imgWidth: CGFloat!
     
     var requestor: iTunesRequestor!
     
@@ -29,6 +35,7 @@ class SoftwarePopupViewController: UIViewController, iTunesRequestorDelegate {
         self.requestor.delegate = self
         
         self.setDataLabels()
+        self.screenshotArray = Array<UIImage>()
         
         self.scrollView.contentSize.width = self.view.frame.size.width
         self.scrollView.frame.size.width = self.view.frame.size.width
@@ -64,6 +71,48 @@ class SoftwarePopupViewController: UIViewController, iTunesRequestorDelegate {
         }
         self.navigationController?.popViewControllerAnimated(false)
     }
+    
+    // ------ UICollectionView Delegate
+    
+    func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCellWithReuseIdentifier("screenshotCell", forIndexPath: indexPath) as! CustomCollectionCell
+        if (self.screenshotArray.count != 0){
+            let screenshot = self.screenshotArray[indexPath.row]
+            cell.image.image = screenshot
+        }
+        
+        return cell
+    }
+    
+    func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        let imagesArray = self.jsonData["screenshotUrls"] as! NSArray
+        return imagesArray.count
+    }
+    
+    func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
+        return 1
+    }
+    
+    func collectionView(collectionView: UICollectionView,
+        layout collectionViewLayout: UICollectionViewLayout,
+        sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
+            let calculatedCollectionHeight = self.collectionView.frame.height - 2
+            if (self.scaleRatio != nil){
+                return CGSize(width: self.imgWidth * self.scaleRatio, height: calculatedCollectionHeight)
+            }
+            
+            return CGSize(width: 225, height: calculatedCollectionHeight)
+    }
+    
+    func collectionView(collectionView: UICollectionView,
+        layout collectionViewLayout: UICollectionViewLayout,
+        insetForSectionAtIndex section: Int) -> UIEdgeInsets {
+            return UIEdgeInsets(top: 1, left: 1, bottom: 1, right: 1)
+    }
+    
+    
+    
+    // ---------- iTunes Requestor
     
     func imageRequestCompleted(image: UIImage) {
         //set images

@@ -50,13 +50,8 @@
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" accessoryType="detailButton" indentationWidth="10" reuseIdentifier="customTableCell" rowHeight="60" id="HNI-5K-woH" customClass="CustomTableCell" customModule="Assignment3" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="28" width="600" height="60"/>
                                         <autoresizingMask key="autoresizingMask"/>
-<<<<<<< Updated upstream
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="HNI-5K-woH" id="LTI-iI-dzP">
-                                            <rect key="frame" x="0.0" y="0.0" width="553" height="69.5"/>
-=======
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="center" tableViewCell="HNI-5K-woH" id="LTI-iI-dzP">
                                             <rect key="frame" x="0.0" y="0.0" width="553" height="59"/>
->>>>>>> Stashed changes
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="6du-Fs-Mv3" userLabel="Image">
@@ -172,13 +167,8 @@
                                         <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-<<<<<<< Updated upstream
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Collection" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vzU-qr-8jg">
-                                        <rect key="frame" x="257" y="146" width="86" height="23"/>
-=======
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Collection" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vzU-qr-8jg">
                                         <rect key="frame" x="16" y="146" width="568" height="23"/>
->>>>>>> Stashed changes
                                         <animations/>
                                         <fontDescription key="fontDescription" style="UICTFontTextStyleTitle3"/>
                                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
@@ -191,7 +181,7 @@
                                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="collectionPrice" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WGq-D8-BJN">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="collectionPrice" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WGq-D8-BJN">
                                         <rect key="frame" x="244" y="189" width="113" height="21"/>
                                         <animations/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
@@ -278,13 +268,8 @@
                                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-<<<<<<< Updated upstream
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="longDescription" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JKf-GM-Zl0">
-                                        <rect key="frame" x="8" y="102" width="585" height="20"/>
-=======
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="longDescription" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TUK-To-RNn">
                                         <rect key="frame" x="8" y="140" width="584" height="20"/>
->>>>>>> Stashed changes
                                         <animations/>
                                         <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
@@ -375,24 +360,6 @@
                                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-<<<<<<< Updated upstream
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="fsV-86-5Tx">
-                                        <rect key="frame" x="8" y="110" width="585" height="346"/>
-                                        <animations/>
-                                        <constraints>
-                                            <constraint firstAttribute="width" secondItem="fsV-86-5Tx" secondAttribute="height" multiplier="272:161" id="X0j-4r-ga7"/>
-                                        </constraints>
-                                    </imageView>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="supportedDevices" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Q77-N0-bal">
-                                        <rect key="frame" x="8" y="472" width="585" height="14"/>
-                                        <animations/>
-                                        <fontDescription key="fontDescription" style="UICTFontTextStyleCaption2"/>
-                                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="tMt-1A-BlV">
-                                        <rect key="frame" x="593" y="464" width="0.0" height="0.0"/>
-=======
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="supportedDevices" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zBW-pK-may">
                                         <rect key="frame" x="8" y="552" width="584" height="14"/>
                                         <animations/>
@@ -447,7 +414,6 @@
                                                 </connections>
                                             </collectionView>
                                         </subviews>
->>>>>>> Stashed changes
                                         <animations/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <constraints>
@@ -502,10 +468,10 @@
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="appIcon" destination="BTy-Gk-VkC" id="zY8-2s-bS8"/>
+                        <outlet property="appIcon" destination="BTy-Gk-VkC" id="T6S-vU-ee1"/>
                         <outlet property="artistName" destination="wKl-S8-fhc" id="l6D-Gc-PU5"/>
-                        <outlet property="collectionView" destination="WNz-TU-i4N" id="NaE-G8-A9L"/>
-                        <outlet property="genre" destination="EJj-iS-63Z" id="8sC-E3-D4Z"/>
+                        <outlet property="collectionView" destination="WNz-TU-i4N" id="QYj-cg-Ucf"/>
+                        <outlet property="genres" destination="EJj-iS-63Z" id="AcE-2S-EjA"/>
                         <outlet property="longDescription" destination="ISS-3b-ryZ" id="LiG-af-yEx"/>
                         <outlet property="scrollView" destination="orw-a1-I0F" id="36B-4w-1oH"/>
                         <outlet property="supportedDevices" destination="zBW-pK-may" id="04g-ao-2U7"/>
