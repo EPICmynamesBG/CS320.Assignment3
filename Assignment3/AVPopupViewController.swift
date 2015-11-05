@@ -38,7 +38,12 @@ class AVPopupViewController: UIViewController {
     }
     
     private func setDataLabels(){
-        //TODO
+        self.trackName.text = jsonData["trackName"] as? String
+        self.artistName.text = jsonData["artistName"] as? String
+        self.collectionName.text = jsonData["collectionName"] as? String
+        self.collectionPrice.text = jsonData["collectionPrice"] as? String
+        self.trackPrice.text = jsonData["trackPrice"] as? String
+               
     }
     
     func tap(){

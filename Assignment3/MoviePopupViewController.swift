@@ -37,7 +37,9 @@ class MoviePopupViewController: UIViewController {
     }
     
     private func setDataLabels(){
-        //TODO
+        self.trackName.text = jsonData["trackName"] as? String
+        self.primaryGenre.text = jsonData["primaryGenre"] as? String
+        self.price.text = jsonData["price"] as? String
     }
     
     func tap(){
