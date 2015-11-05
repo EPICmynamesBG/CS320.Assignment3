@@ -134,7 +134,6 @@ class MainViewController: UIViewController, UITableViewDelegate, UISearchBarDele
         self.spinner.stopAnimating()
         UIApplication.sharedApplication().networkActivityIndicatorVisible = false
         
-        print(responseData)
         self.tableView.reloadData() //<-- uncomment to get table to refresh
     }
     
@@ -151,6 +150,18 @@ class MainViewController: UIViewController, UITableViewDelegate, UISearchBarDele
             
         }
        
+        
+    }
+    
+    func noNetworkConnection() {
+        self.spinner.stopAnimating()
+        UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+        let alert = UIAlertController(title: "No Internet Connection", message: "No Internet Connection Found", preferredStyle: UIAlertControllerStyle.Alert)
+        let cancel = UIAlertAction(title: "OK", style: UIAlertActionStyle.Cancel) { (action:UIAlertAction) -> Void in
+            //do nothing
+        }
+        alert.addAction(cancel)
+        self.presentViewController(alert, animated: true, completion: nil)
         
     }
     
