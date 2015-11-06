@@ -23,6 +23,7 @@ class MainViewController: UIViewController, UITableViewDelegate, UISearchBarDele
         self.navigationController?.setNavigationBarHidden(true, animated: false)
         self.navigationController?.modalPresentationStyle = UIModalPresentationStyle.PageSheet
         self.navigationController?.modalTransitionStyle = UIModalTransitionStyle.FlipHorizontal
+        
         requestor = iTunesRequestor()
         self.requestor.delegate = self
         self.searchTypeController.addTarget(self, action: "changeSearchType", forControlEvents: UIControlEvents.ValueChanged)
@@ -127,7 +128,7 @@ class MainViewController: UIViewController, UITableViewDelegate, UISearchBarDele
             cell.iconImage.hidden = true
         }
         
-        self.requestor.getCellImageInBackground(dict["artworkUrl100"] as! String, atIndex: index)
+        self.requestor.getCellImageInBackground(dict["artworkUrl60"] as! String, atIndex: index)
         
         return cell
     }

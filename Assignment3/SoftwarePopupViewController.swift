@@ -51,7 +51,7 @@ class SoftwarePopupViewController: UIViewController, UICollectionViewDelegate, U
         let app: String! = self.jsonData["trackName"] as! String
         self.artistName.text = "\(app)\nby \(developers)"
         
-        let iconUrl = self.jsonData["artworkUrl100"] as! String
+        let iconUrl = self.jsonData["artworkUrl60"] as! String
         self.requestor.getImageInBackground(iconUrl, withTag: self.appIcon.tag)
         
         var supDevices = ""
@@ -86,7 +86,7 @@ class SoftwarePopupViewController: UIViewController, UICollectionViewDelegate, U
     }
     
     func tap(){
-        let label = UILabel(frame: CGRect(x: 0, y: 16, width: self.view.bounds.width, height: 20))
+        let label = UILabel(frame: CGRect(x: 0, y: 16, width: self.view.bounds.width, height: 22))
         label.text = "Double tap to go back"
         label.textColor = UIColor.lightGrayColor()
         label.textAlignment = NSTextAlignment.Center
