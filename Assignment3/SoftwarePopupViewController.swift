@@ -8,16 +8,17 @@
 
 import UIKit
 
-class SoftwarePopupViewController: UIViewController, iTunesRequestorDelegate {
+class SoftwarePopupViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, UICollectionViewDataSource, iTunesRequestorDelegate {
     
     var jsonData: NSDictionary!
     @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var artistName: UILabel!
-    @IBOutlet weak var genres: UILabel!
+    @IBOutlet weak var genres: UILabel! //array
     @IBOutlet weak var longDescription: UILabel!
-    @IBOutlet weak var supportedDevices: UILabel!
+    @IBOutlet weak var supportedDevices: UILabel! //arrays
     @IBOutlet weak var appIcon: UIImageView!
     @IBOutlet weak var collectionView: UICollectionView!
+    
     
     
     var screenshotArray : Array<UIImage>!
@@ -50,7 +51,42 @@ class SoftwarePopupViewController: UIViewController, iTunesRequestorDelegate {
     }
     
     private func setDataLabels(){
-        //TODO
+        let developers: String! = self.jsonData["artistName"] as! String
+        let app: String! = self.jsonData["trackName"] as! String
+        self.artistName.text = "\(app)\nby \(developers)"
+        
+        let iconUrl = self.jsonData["artworkUrl60"] as! String
+        self.requestor.getImageInBackground(iconUrl, withTag: self.appIcon.tag)
+        
+        var supDevices = ""
+        let devicesArray = self.jsonData["supportedDevices"] as! NSArray
+        for (var i = 0; i < devicesArray.count ; i++){
+            if (i != devicesArray.count - 1){
+                supDevices = supDevices + (devicesArray[i] as! String) + ", "
+            } else {
+                supDevices = supDevices + (devicesArray[i] as! String)
+            }
+        }
+        self.supportedDevices.text = supDevices
+        self.longDescription.text = self.jsonData["description"] as? String
+        
+        var genres = ""
+        let genreArray = self.jsonData["genres"] as! NSArray
+        for (var i = 0; i < genreArray.count ; i++){
+            if (i != genreArray.count - 1){
+                genres = genres + (genreArray[i] as! String) + ", "
+            } else {
+                genres = genres + (genreArray[i] as! String)
+            }
+        }
+        self.genres.text = genres
+        let imagesArray = self.jsonData["screenshotUrls"] as! NSArray
+        numScreenshots = imagesArray.count
+        for (var i = 0; i < imagesArray.count; i++) {
+            let imageString = imagesArray[i] as! String
+            requestor.getImageInBackground(imageString, withTag: i + 2)
+        }
+        
     }
     
     func tap(){
@@ -114,8 +150,17 @@ class SoftwarePopupViewController: UIViewController, iTunesRequestorDelegate {
     
     // ---------- iTunes Requestor
     
-    func imageRequestCompleted(image: UIImage) {
-        //set images
+    func imageRequestCompleted(image: UIImage, withTag tag: Int) {
+        if (self.appIcon.tag == tag){
+            self.appIcon.image = image
+        } else {
+            self.imgWidth = image.size.width
+            self.scaleRatio = (self.collectionView.frame.height - 2)/image.size.height
+            self.screenshotArray.append(image)
+        }
+        if (numScreenshots == self.screenshotArray.count){
+            self.collectionView.reloadData()
+        }
     }
     
     func noNetworkConnection() {

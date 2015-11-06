@@ -16,6 +16,7 @@ class MoviePopupViewController: UIViewController {
     @IBOutlet weak var trackName: UILabel!
     @IBOutlet weak var primaryGenre: UILabel!
     @IBOutlet weak var price: UILabel!
+    @IBOutlet weak var longDescription: UILabel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -38,8 +39,15 @@ class MoviePopupViewController: UIViewController {
     
     private func setDataLabels(){
         self.trackName.text = jsonData["trackName"] as? String
-        self.primaryGenre.text = jsonData["primaryGenre"] as? String
-        self.price.text = jsonData["price"] as? String
+        self.primaryGenre.text = jsonData["primaryGenreName"] as? String
+        var trackPrice = jsonData["trackPrice"] as! Double
+        if(trackPrice == 0.0){
+            self.price.text = "Free!"
+        } else {
+            self.price.text = "$\(trackPrice)"
+        }
+        
+        self.longDescription.text = jsonData["longDescription"] as? String
     }
     
     func tap(){

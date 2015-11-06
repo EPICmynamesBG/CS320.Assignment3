@@ -95,7 +95,7 @@ class MainViewController: UIViewController, UITableViewDelegate, UISearchBarDele
         cell.title.text = dictionary["trackName"] as? String
         cell.subtitle.text = dictionary["collectionName"] as? String
        // cell.iconImage.image = dictionary["artworkUrl60"] as?
-        self.requestor.getCellImageInBackground(dictionary["artworkUrl100"] as! String, atIndex: indexPath.row)
+        self.requestor.getCellImageInBackground(dictionary["artworkUrl60"] as! String, atIndex: indexPath.row)
         return cell
     }
     
