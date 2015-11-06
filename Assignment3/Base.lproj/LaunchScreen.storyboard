@@ -3,6 +3,7 @@
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9049"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
         <!--View Controller-->
@@ -24,12 +25,22 @@
                                     <constraint firstAttribute="width" secondItem="4dy-pC-vzp" secondAttribute="height" multiplier="1:1" id="asK-bB-8Tg"/>
                                 </constraints>
                             </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Developed by Brandon Groff &amp; Seth Winslow" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zoT-Be-6o5">
+                                <rect key="frame" x="28" y="567" width="544" height="25"/>
+                                <animations/>
+                                <fontDescription key="fontDescription" name="Avenir-Light" family="Avenir" pointSize="18"/>
+                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <animations/>
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="4dy-pC-vzp" firstAttribute="centerY" secondItem="Ze5-6b-2t3" secondAttribute="centerY" id="7yH-l7-Hgx"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="zoT-Be-6o5" secondAttribute="trailing" constant="8" id="gkx-Lg-6q1"/>
+                            <constraint firstItem="zoT-Be-6o5" firstAttribute="leading" secondItem="Ze5-6b-2t3" secondAttribute="leadingMargin" constant="8" id="htE-nn-GGy"/>
                             <constraint firstItem="4dy-pC-vzp" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="sS9-nF-ZSE"/>
+                            <constraint firstItem="xb3-aO-Qok" firstAttribute="top" secondItem="zoT-Be-6o5" secondAttribute="bottom" constant="8" id="zzh-4n-KRc"/>
                         </constraints>
                     </view>
                 </viewController>

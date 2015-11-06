@@ -41,16 +41,29 @@ class AVPopupViewController: UIViewController {
         self.trackName.text = jsonData["trackName"] as? String
         self.artistName.text = jsonData["artistName"] as? String
         self.collectionName.text = jsonData["collectionName"] as? String
-        self.collectionPrice.text = jsonData["collectionPrice"] as? String
-        self.trackPrice.text = jsonData["trackPrice"] as? String
+        let colPrice = jsonData["collectionPrice"] as! Double
+        if (colPrice == 0.0){
+            self.collectionPrice.text = "Free"
+        } else {
+            self.collectionPrice.text = "$\(colPrice)"
+        }
+        let price = jsonData["trackPrice"] as! Double
+        if (price == 0.0){
+            self.trackPrice.text = "Free"
+        } else {
+            self.trackPrice.text = "$\(price)"
+        }
+        
                
     }
     
     func tap(){
-        let label = UILabel(frame: CGRect(x: 0, y: 16, width: self.view.bounds.width, height: 17))
+        let label = UILabel(frame: CGRect(x: 0, y: 16, width: self.view.bounds.width, height: 22))
         label.text = "Double tap to go back"
         label.textColor = UIColor.lightGrayColor()
         label.textAlignment = NSTextAlignment.Center
+        let font = UIFont(name: "Avenir Light", size: 15)
+        label.font = font
         self.view.addSubview(label)
     }
     

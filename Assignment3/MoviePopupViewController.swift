@@ -40,7 +40,7 @@ class MoviePopupViewController: UIViewController {
     private func setDataLabels(){
         self.trackName.text = jsonData["trackName"] as? String
         self.primaryGenre.text = jsonData["primaryGenreName"] as? String
-        var trackPrice = jsonData["trackPrice"] as! Double
+        let trackPrice = jsonData["trackPrice"] as! Double
         if(trackPrice == 0.0){
             self.price.text = "Free!"
         } else {
@@ -51,10 +51,12 @@ class MoviePopupViewController: UIViewController {
     }
     
     func tap(){
-        let label = UILabel(frame: CGRect(x: 0, y: 16, width: self.view.bounds.width, height: 17))
+        let label = UILabel(frame: CGRect(x: 0, y: 16, width: self.view.bounds.width, height: 22))
         label.text = "Double tap to go back"
         label.textColor = UIColor.lightGrayColor()
         label.textAlignment = NSTextAlignment.Center
+        let font = UIFont(name: "Avenir Light", size: 15)
+        label.font = font
         self.view.addSubview(label)
     }
     
