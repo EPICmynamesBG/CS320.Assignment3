@@ -90,12 +90,35 @@ class MainViewController: UIViewController, UITableViewDelegate, UISearchBarDele
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell:CustomTableCell = self.tableView.dequeueReusableCellWithIdentifier("customTableCell") as! CustomTableCell
-        //cell.title.text = "TEXT"
         let dictionary:NSDictionary = self.responseData[indexPath.row] as! NSDictionary
-        cell.title.text = dictionary["trackName"] as? String
-        cell.subtitle.text = dictionary["collectionName"] as? String
+        let type = dictionary["kind"] as! String
+       
+        if(type == "song" || type == "artist")
+        {
+            cell.title.text = dictionary["trackName"] as? String
+            cell.subtitle.text = dictionary["collectionName"] as? String
+            self.requestor.getCellImageInBackground(dictionary["artworkUrl60"] as! String, atIndex: indexPath.row)
+
+        }
+        else if(type == "software"){
+            cell.title.text = dictionary["artistName"] as? String
+            let priceVariable = dictionary["price"] as? Double
+            let priceString:String = String(priceVariable)
+            if(priceString == "0.0"){
+                  cell.subtitle.text = "Free!"
+            }
+            cell.subtitle.text = priceString
         
-        self.requestor.getCellImageInBackground(dictionary["artworkUrl60"] as! String, atIndex: indexPath.row)
+            self.requestor.getCellImageInBackground(dictionary["artworkUrl60"] as! String, atIndex: indexPath.row)
+        }
+        else if(type == "feature-movie"){
+            cell.title.text = dictionary["trackName"] as? String
+            cell.subtitle.text = dictionary["contentAdvisoryRating"] as? String
+            self.requestor.getCellImageInBackground(dictionary["artworkUrl60"] as! String, atIndex: indexPath.row)
+
+        }
+        
+        
         return cell
     }
     
