@@ -103,11 +103,12 @@ class MainViewController: UIViewController, UITableViewDelegate, UISearchBarDele
         else if(type == "software"){
             cell.title.text = dictionary["artistName"] as? String
             let priceVariable = dictionary["price"] as? Double
-            let priceString:String = String(priceVariable)
-            if(priceString == "0.0"){
+            //let priceString:String = String(priceVariable)
+            if(priceVariable! == 0.0){
                   cell.subtitle.text = "Free!"
+            } else {
+            cell.subtitle.text = "$\(priceVariable!)"
             }
-            cell.subtitle.text = priceString
         
             self.requestor.getCellImageInBackground(dictionary["artworkUrl60"] as! String, atIndex: indexPath.row)
         }
